@@ -3,11 +3,12 @@ services:
     name: telegram-selenium-bot
     env: python
     buildCommand: |
-      apt-get update && apt-get install -y wget unzip xvfb libxi6 libgconf-2-4
+      apt-get update && apt-get install -y wget unzip xvfb libxi6 libgconf-2-4 libnss3 libatk1.0-0 libatk-bridge2.0-0 libcups2 libxss1 libgbm1 libasound2
       wget -q https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
       dpkg -i google-chrome-stable_current_amd64.deb || apt-get -f install -y
       wget -q https://chromedriver.storage.googleapis.com/114.0.5735.90/chromedriver_linux64.zip
-      unzip chromedriver_linux64.zip -d /usr/local/bin/
+      unzip -o chromedriver_linux64.zip -d /usr/local/bin/
+      chmod +x /usr/local/bin/chromedriver
       pip install -r requirements.txt
     startCommand: xvfb-run --auto-servernum python telegram_session_replay.py
     envVars:
